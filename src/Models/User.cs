@@ -8,6 +8,8 @@ namespace ConfectineryShop.Models
 {
     public class User
     {
+        public int ID { get; set; }
+
         [MaxLength(50)]
         public string FirstName { get; set; }
         [MaxLength(50)]
