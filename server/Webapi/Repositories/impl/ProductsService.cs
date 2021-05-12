@@ -20,7 +20,7 @@ namespace Webapi.Repositories.Impl
     public async Task<IEnumerable<Product>> GetAll() => await ctx.Products.ToListAsync();
 
     public async Task<Product> GetById(int id) =>
-      await ctx.Products.FirstOrDefaultAsync(product => product.Id == id);
+      await ctx.Products.FirstOrDefaultAsync(product => product.ID == id);
 
     public async Task RemoveById(int id)
     {

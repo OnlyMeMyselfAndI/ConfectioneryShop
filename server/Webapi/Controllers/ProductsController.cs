@@ -38,7 +38,7 @@ namespace Webapi.Controllers
 
       await this.productsService.Create(newProduct);
 
-      return CreatedAtAction(nameof(GetById), new { id = newProduct.Id }, newProduct);
+      return CreatedAtAction(nameof(GetById), new { id = newProduct.ID }, newProduct);
     }
 
     /*

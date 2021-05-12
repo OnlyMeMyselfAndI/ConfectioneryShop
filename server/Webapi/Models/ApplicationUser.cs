@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
@@ -7,6 +8,8 @@ namespace Webapi.Models
   {
     [MaxLength(150)]
     public string FullName { get; set; }
+
+    public ICollection<Order> Orders { get; set; }
   }
 
   public static class Roles

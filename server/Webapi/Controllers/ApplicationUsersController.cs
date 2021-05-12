@@ -15,6 +15,7 @@ using Webapi.Models;
 using Webapi.RequestModels;
 using Webapi.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Webapi.Controllers
 {
@@ -88,9 +89,9 @@ namespace Webapi.Controllers
     /*
       POST (Guest) /api/v1/application_users/list
     */
-    [HttpGet("list")]
-    //[Authorize(Roles=Roles.Admin)]
-    public async Task<ActionResult> List()
+    [HttpGet]
+    [Authorize(Roles=Roles.Admin)]
+    public async Task<ActionResult> GetAll()
     {
       return Ok(dbContext.Users.ToList());
     }
@@ -119,16 +120,14 @@ namespace Webapi.Controllers
     /*
       GET (Guest) /api/v1/application_users/{user_id}
     */
-    [HttpGet("{user_id}")]
-    [Authorize(Roles = "Admin, Customer")]
-    public async Task<ActionResult> GetUserProfileById([FromRoute] string user_id)
+    [HttpGet("{id}")]
+    [Authorize(Roles=Roles.Admin)]
+    public async Task<ActionResult> GetUserProfileById([FromRoute] string id)
     {
-      if (user_id == "")
+      if (id == "")
         return BadRequest(new { errors = new { global = "You must inform a user id to get the profile" } });
 
-      var applicationUser = await this.userManager.FindByIdAsync(user_id);
-
-      Console.WriteLine(applicationUser);
+      var applicationUser = await userManager.FindByIdAsync(id);
 
       if (applicationUser != null)
         return Ok(new

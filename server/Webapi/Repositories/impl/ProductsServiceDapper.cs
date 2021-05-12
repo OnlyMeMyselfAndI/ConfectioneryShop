@@ -40,7 +40,7 @@ namespace Webapi.Repositories.Impl
 
     public async Task<Product> GetById(int id)
     {
-      string sql = $"SELECT * FROM public.\"Products\" WHERE \"Id\" = {id}";
+      string sql = $"SELECT * FROM public.\"Products\" WHERE \"ID\" = {id}";
       using (var connection = new NpgsqlConnection(this.connectionString))
       {
         return await connection.QueryFirstAsync<Product>(sql);
@@ -49,7 +49,7 @@ namespace Webapi.Repositories.Impl
 
     public async Task RemoveById(int id)
     {
-      string sql = $"DELETE FROM public.\"Products\" WHERE \"Id\" = {id}";
+      string sql = $"DELETE FROM public.\"Products\" WHERE \"ID\" = {id}";
       using (var connection = new NpgsqlConnection(this.connectionString))
       {
         await connection.QueryAsync<Product>(sql);
