@@ -1,77 +1,46 @@
 import React from "react"
-import { Link } from "react-router-dom"
 import styled from "styled-components"
 import PropTypes from "prop-types"
-import { faCartPlus, faPlus } from "@fortawesome/free-solid-svg-icons"
-
-import { limitText } from "../../utils/format"
+import { faPlus } from "@fortawesome/free-solid-svg-icons"
 
 import CardImage from "../globals/images/CardImage"
-import CardStars from "../globals/stars/CardStars"
-import CardPrice from "./CardPrice"
-import TagList from "./TagList"
 import IconButton from "../globals/buttons/IconButton"
+import api from "../../api/api"
 
 const ProductCard = ({ product }) => {
   const {
-    id, title, image, price, company, info,
+    title, image, price, info,
   } = product
 
-  // Testing Variables
-  const stars = Math.floor(Math.random() * 10 + 1) / 2
-  const oldPrice = price * 1.2
-  const parcelNum = 12
-  const parcelVal = price / 12
-  const discount = 10
-  const tags = [
-    {
-      href: "/products/phone",
-      text: "phones",
-    },
-    {
-      href: "products/smartphones/",
-      text: "smartphones",
-    },
-  ]
-
-  const handleComprar = () => {
-    // TODO: comprar passando id
-  }
-
-  const handleDetails = () => {
-    // TODO: redirect to product/details/{id}
+  const handleOrder = () => {
+		let user = localStorage.getItem("user");
+		if (!user) window.location.href = "/signin";
+		else {
+			user = JSON.parse(user)
+			const amount = parseInt(prompt(`Введіть кількість "${title}": `, "1"))
+			api.orders.create(amount, user["email"], title);
+		}
   }
 
   return (
     <ProductCardStyled className="ProductCard">
       <CardImage src={image} />
       <div className="card-title">{title}</div>
-      <div className="card-company">{company}</div>
-      <div className="card-info">{limitText(info, 240, true)}</div>
-      <CardStars num={stars} />
-      <CardPrice
-        oldPrice={oldPrice}
-        price={price}
-        parcelNum={parcelNum}
-        parcelVal={parcelVal}
-        discount={discount}
-      />
+      <div className="card-info">{info}</div>
+      <div className="card-price">{price} грн</div>
       <div className="buttons">
-        <IconButton icon={faCartPlus} onClick={handleComprar} text="Comprar" />
-        <IconButton icon={faPlus} onClick={handleDetails} text="Detalhes" />
+        <IconButton icon={faPlus} onClick={handleOrder} text="Замовити" />
       </div>
-      <TagList tags={tags} />
     </ProductCardStyled>
   )
 }
 
 ProductCard.propTypes = {
   product: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    company: PropTypes.string.isRequired,
     info: PropTypes.string.isRequired,
   }).isRequired,
 }
@@ -88,17 +57,19 @@ const ProductCardStyled = styled.div`
   }
 
   .card-title {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 3px;
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 20px;
     height: 50px;
+		text-align: center;
   }
 
-  .card-company {
-    font-size: 0.8rem;
-    color: var(--grey5);
-    font-weight: 500;
-    margin-bottom: 3px;
+	.card-price {
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: var(--mainBlue);
+    margin-bottom: 13px;
+		float: left;
   }
 
   .card-info {
@@ -106,21 +77,18 @@ const ProductCardStyled = styled.div`
     color: var(--grey4);
     font-weight: 300;
     text-align: justify;
-    margin-bottom: 3px;
-    height: 100px;
+    margin: 40px;
     overflow-y: hidden;
+		text-align: center;
   }
 
   .CardStars {
     margin-bottom: 3px;
   }
 
-  .CardPrice {
-    margin-bottom: 13px;
-  }
-
   .buttons {
     display: flex;
+		float: right;
     justify-content: space-between;
   }
 

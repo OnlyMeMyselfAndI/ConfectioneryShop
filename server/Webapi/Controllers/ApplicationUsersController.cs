@@ -114,20 +114,20 @@ namespace Webapi.Controllers
       var userRole = role.FirstOrDefault() ?? "Customer";
       var token = this.tokenGenerator.GenerateAuthenticationToken(user.Id, userRole, requestBody.Email, false);
 
-      return Ok(new { token = token, email = requestBody.Email, isEmailConfirmed = false });
+      return Ok(new { token = token, email = requestBody.Email, userName = user.UserName, isAdmin = userRole == Roles.Admin, isEmailConfirmed = false });
     }
 
     /*
-      GET (Guest) /api/v1/application_users/{user_id}
+      GET (Guest) /api/v1/application_users/{email}
     */
-    [HttpGet("{id}")]
+    [HttpGet("{email}")]
     [Authorize(Roles=Roles.Admin)]
-    public async Task<ActionResult> GetUserProfileById([FromRoute] string id)
+    public async Task<ActionResult> GetUserByEmail([FromRoute] string email)
     {
-      if (id == "")
-        return BadRequest(new { errors = new { global = "You must inform a user id to get the profile" } });
+      if (email == "")
+        return BadRequest(new { errors = new { global = "You must inform a user email to get the profile" } });
 
-      var applicationUser = await userManager.FindByIdAsync(id);
+      var applicationUser = await dbContext.ApplicationUsers.FirstOrDefaultAsync(u => u.Email == email);
 
       if (applicationUser != null)
         return Ok(new
@@ -138,7 +138,7 @@ namespace Webapi.Controllers
           isEmailConfirmed = applicationUser.EmailConfirmed,
         });
       else
-        return BadRequest(new { errors = new { global = "User not found with the passed Id" } });
+        return BadRequest(new { errors = new { global = "User not found with the passed email" } });
     }
   }
 }

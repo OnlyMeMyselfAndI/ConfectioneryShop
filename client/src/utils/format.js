@@ -13,14 +13,3 @@ export const formatMoney = function (price) {
   return `${floor},${rest}`
 }
 
-/*
- * Limit long text to fit in small spaces with a passed limit and an optional
- * 3 dots at the end
- */
-export const limitText = function (text, limit, withFinalDots) {
-  const result = text.substr(0, limit)
-  if (withFinalDots && text.length > limit) {
-    return `${result}... `
-  }
-  return result
-}

@@ -7,10 +7,9 @@ namespace Webapi.RequestModels
     public int Amount { get; set; } = 1;
 
     [Required]
-    [MaxLength(36)]
-    public string UserID { get; set; }
+    public string UserEmail { get; set; }
 
     [Required]
-    public int ProductID  { get; set; }
+    public string ProductTitle  { get; set; }
   }
 }

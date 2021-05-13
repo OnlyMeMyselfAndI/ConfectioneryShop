@@ -20,13 +20,15 @@ export const signup = function (newUser) {
 export const signin = function (credentials) {
   return function (dispatch) {
     return api.applicationUser.signin(credentials).then((applicationUser) => {
-      const { email, token, isEmailConfirmed } = applicationUser
-      localStorage.setItem("ecommerceJWT", token)
+      const { email, token, userName, isAdmin, isEmailConfirmed } = applicationUser
+			localStorage.setItem("user", JSON.stringify(applicationUser))
       setAuthorizationHeaders(applicationUser.token)
       dispatch(
         applicationUserLoggedIn({
           email,
           token,
+					userName,
+					isAdmin,
           isEmailConfirmed,
           isAuthenticated: true,
         }),
@@ -39,12 +41,15 @@ export const signinWithToken = function (token) {
   return function (dispatch) {
     if (token) {
       const payload = decode(token)
-      const { email, isEmailConfirmed } = payload
+      const { email, isEmailConfirmed, role, userName } = payload
+			const isAdmin = role === "Admin"
       setAuthorizationHeaders(token)
       dispatch(
         applicationUserLoggedIn({
           email,
           token,
+					userName,
+					isAdmin,
           isEmailConfirmed: isEmailConfirmed === "True",
           isAuthenticated: true,
         }),
@@ -55,7 +60,7 @@ export const signinWithToken = function (token) {
 
 export const signout = function () {
   return function (dispatch) {
-    localStorage.removeItem("ecommerceJWT")
+    localStorage.removeItem("user")
     deleteAuthorizationHeaders()
     dispatch(
       applicationUserLoggedOut({

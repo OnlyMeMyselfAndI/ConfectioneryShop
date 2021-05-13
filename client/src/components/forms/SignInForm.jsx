@@ -67,7 +67,7 @@ const SignInForm = ({ onSubmit }) => {
 
   return (
     <SignInFormStyled className="SignInForm">
-      <h1>Sign In Form</h1>
+      <h1>Вхід</h1>
 
       {isLoading && <LoadingSpinner text="Trying to login..." />}
 

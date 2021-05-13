@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Webapi.Models;
 
 namespace Webapi.Repositories
 {
@@ -24,7 +25,7 @@ namespace Webapi.Repositories
         Subject = new ClaimsIdentity(new Claim[]
         {
           new Claim("id", userId), // "UserId"
-          new Claim(options.ClaimsIdentity.RoleClaimType, userRole),
+          new Claim("role", userRole),
           new Claim("email", userEmail),
           new Claim("isEmailConfirmed", isEmailConfirmed.ToString())
         }),

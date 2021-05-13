@@ -16,7 +16,6 @@ const SignInPage = ({ signin, history }) => {
   return (
     <SignInPageStyled className="SignInPage">
       <PageContainer>
-        <h1>Sign In Page</h1>
         <div className="columns">
           <div className="column-form">
             <SignInForm onSubmit={handleSubmit} />

@@ -14,21 +14,20 @@ const ProductGrid = ({ products }) => (
       </div>
     )}
 
-    {products.length === 0 && <p>No products to display at the moment.</p>}
+    {products.length === 0 && <p>Поки що на сайті немає продуктів.</p>}
   </ProductGridStyled>
 )
 
 ProductGrid.propTypes = {
-  products: PropTypes.arrayOf({
-    product: PropTypes.shape({
-      id: PropTypes.string.isRequired,
+  products: PropTypes.arrayOf(
+		PropTypes.shape({
+      id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       image: PropTypes.string.isRequired,
       price: PropTypes.number.isRequired,
-      company: PropTypes.string.isRequired,
       info: PropTypes.string.isRequired,
     }).isRequired,
-  }).isRequired,
+  ).isRequired,
 }
 
 const ProductGridStyled = styled.div`

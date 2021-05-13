@@ -22,9 +22,12 @@ namespace Webapi.Repositories.Impl
     public async Task<Product> GetById(int id) =>
       await ctx.Products.FirstOrDefaultAsync(product => product.ID == id);
 
-    public async Task RemoveById(int id)
+    public async Task<Product> GetByTitle(string title) =>
+      await ctx.Products.FirstOrDefaultAsync(product => product.Title == title);
+
+    public async Task RemoveByTitle(string title)
     {
-      var product = await GetById(id);
+      var product = await GetByTitle(title);
       ctx.Products.Remove(product);
       await ctx.SaveChangesAsync();
     }

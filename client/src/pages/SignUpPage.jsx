@@ -16,7 +16,7 @@ const SignUpPage = ({ signup, history }) => {
   return (
     <SignUpPageStyled className="SignUpPage">
       <PageContainer>
-        <h1>Sign Up Page</h1>
+        <h1>Реєстрація</h1>
         <div className="columns">
           <div className="column-form">
             <SignUpForm onSubmit={handleSubmit} />

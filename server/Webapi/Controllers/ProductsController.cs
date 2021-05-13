@@ -28,6 +28,10 @@ namespace Webapi.Controllers
       if (!ModelState.IsValid)
         return BadRequest(new { errors = new { global = "Request body is invalid" } });
 
+      var productFound = await productsService.GetByTitle(reqBody.Title);
+      if (productFound != null)
+        return BadRequest(new { errors = new { global = "Product with this title already exists" } });
+
       var newProduct = new Product
       {
         Title = reqBody.Title,
@@ -36,33 +40,33 @@ namespace Webapi.Controllers
         Info = reqBody.Info,
       };
 
-      await this.productsService.Create(newProduct);
+      await productsService.Create(newProduct);
 
-      return CreatedAtAction(nameof(GetById), new { id = newProduct.ID }, newProduct);
+      return CreatedAtAction(nameof(GetByTitle), new { title = newProduct.Title }, newProduct);
     }
 
     /*
-      GET (All) /api/v1/products/{id}
+      GET (All) /api/v1/products/{title}
     */
-    [HttpGet("{id}")]
-    public async Task<ActionResult> GetById(int id)
+    [HttpGet("{title}")]
+    public async Task<ActionResult> GetByTitle(string title)
     {
-      var productFound = await this.productsService.GetById(id);
+      var productFound = await this.productsService.GetByTitle(title);
 
       if (productFound == null)
-        return BadRequest(new { errors = new { global = "Product not found with the passed id" } });
+        return BadRequest(new { errors = new { global = "Product not found with the passed title" } });
 
       return Ok(productFound);
     }
 
     /*
-      GET (All) /api/v1/products/{}
+      GET (All) /api/v1/products/remove{title}
     */
-    [HttpGet("remove/{id}")]
+    [HttpGet("remove/{title}")]
     [Authorize(Roles = Roles.Admin)]
-    public async Task<ActionResult> RemoveById(int id)
+    public async Task<ActionResult> RemoveByTitle(string title)
     {
-      await this.productsService.RemoveById(id);
+      await this.productsService.RemoveByTitle(title);
       return Ok();
     }
 

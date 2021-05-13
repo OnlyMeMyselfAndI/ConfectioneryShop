@@ -15,9 +15,10 @@ import GuestRoute from "./components/routes/GuestRoute"
 import CustomerRoute from "./components/routes/CustomerRoute"
 
 const App = ({ signinWithToken }) => {
-  const token = localStorage.getItem("ecommerceJWT")
-  if (token) {
-    signinWithToken(token)
+  let user = localStorage.getItem("user")
+	if (user) {
+		user = JSON.parse(user)
+    signinWithToken(user["token"])
   }
   return (
     <AppStyled>

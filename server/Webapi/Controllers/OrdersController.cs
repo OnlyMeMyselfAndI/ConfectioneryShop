@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -29,22 +31,26 @@ namespace Webapi.Controllers
       POST (Admin) /api/v1/orders
     */
     [HttpPost]
-    [Authorize(Roles = Roles.Admin)]
     public async Task<ActionResult> Create(CreateOrderRequest reqBody)
     {
       if (!ModelState.IsValid)
         return BadRequest(new { errors = new { global = "Request body is invalid" } });
 
-      var (err, order) = await CheckOrder(new Order
+      var productFound = await productsService.GetByTitle(reqBody.ProductTitle);
+      if (productFound == null) return Error("Product not found with the passed id");
+
+      var userFound = await ctx.ApplicationUsers.FirstOrDefaultAsync(u => u.Email == reqBody.UserEmail);
+      if (userFound == null) return Error("User not found with the passed id");
+
+      var order = new Order
       {
-        ProductID = reqBody.ProductID,
-        ApplicationUserID = reqBody.UserID,
+        ProductID = productFound.ID,
+        ApplicationUserID = userFound.Id,
 
         Amount = reqBody.Amount,
         Time = DateTime.Now,
-      });
+      };
 
-      if (order == null) return Error(err);
       await ordersService.Create(order); 
 
       return CreatedAtAction(nameof(GetById), new { id = order.ID }, order);
@@ -81,7 +87,22 @@ namespace Webapi.Controllers
     [Authorize(Roles = Roles.Admin)]
     public async Task<ActionResult> GetAll()
     {
-      return Ok(await ordersService.GetAll());
+      var orders = await ordersService.GetAll();
+      var shapedOrders = orders.Select(async o =>
+      {
+        var productFound = await productsService.GetById(o.ProductID);
+        var userFound = await ctx.ApplicationUsers.FirstOrDefaultAsync(u => u.Id == o.ApplicationUserID);
+
+        return new
+        {
+          email = userFound.Email,
+          product = productFound.Title,
+          time = o.Time.ToString("dddd, dd MMMM yyyy HH:mm:ss"),
+          amount = o.Amount,
+        };
+      }).Select(q => q.Result);
+
+      return Ok(shapedOrders);
     }
 
     #region utils

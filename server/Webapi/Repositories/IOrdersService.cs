@@ -24,7 +24,7 @@ namespace Webapi.Repositories
     Task<Order> GetById(int id);
 
     /*
-      Get Order by its id
+      Remove Order by its id
     */
     Task RemoveById(int id);
   }

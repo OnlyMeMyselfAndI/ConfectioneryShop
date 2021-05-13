@@ -116,7 +116,6 @@ const SignUpForm = ({ onSubmit }) => {
 
   return (
     <SignUpFormStyled className="SignUpForm">
-      <h1>Sign Up Form</h1>
 
       {isLoading && <LoadingSpinner text="Trying to signup new user..." />}
 

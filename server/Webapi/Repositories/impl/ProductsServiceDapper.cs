@@ -47,9 +47,18 @@ namespace Webapi.Repositories.Impl
       }
     }
 
-    public async Task RemoveById(int id)
+    public async Task<Product> GetByTitle(string title)
     {
-      string sql = $"DELETE FROM public.\"Products\" WHERE \"ID\" = {id}";
+      string sql = $"SELECT * FROM public.\"Products\" WHERE \"Title\" = '{title}'";
+      using (var connection = new NpgsqlConnection(this.connectionString))
+      {
+        return await connection.QueryFirstAsync<Product>(sql);
+      }
+    }
+
+    public async Task RemoveByTitle(string title)
+    {
+      string sql = $"DELETE FROM public.\"Products\" WHERE \"Title\" = '{title}'";
       using (var connection = new NpgsqlConnection(this.connectionString))
       {
         await connection.QueryAsync<Product>(sql);

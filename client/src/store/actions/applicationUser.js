@@ -3,6 +3,8 @@ import { USER_LOGGED_IN, USER_LOGGED_OUT } from "../types/applicationUser"
 export const applicationUserLoggedIn = function ({
   email,
   token,
+	userName,
+	isAdmin,
   isEmailConfirmed,
   isAuthenticated,
 }) {
@@ -11,6 +13,8 @@ export const applicationUserLoggedIn = function ({
     applicationUser: {
       email,
       token,
+			userName,
+			isAdmin,
       isEmailConfirmed,
       isAuthenticated,
     },

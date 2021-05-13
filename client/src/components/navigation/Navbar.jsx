@@ -7,39 +7,41 @@ import PropTypes from "prop-types"
 
 import PageContainer from "../globals/containers/PageContainer"
 
-const Navbar = ({ isAuthenticated, signout }) => (
+const Navbar = ({ isAuthenticated, isAdmin, signout }) => (
   <NavbarStyled>
     <PageContainer>
       <ul>
         <li>
           <Link className="nav-link" to="/">
-            Home
+            Каталог
           </Link>
         </li>
         {!isAuthenticated && (
           <>
             <li>
               <Link className="nav-link" to="/signin">
-                Sign In
+                Увійти
               </Link>
             </li>
             <li>
               <Link className="nav-link" to="/signup">
-                Sign Up
+                Зареєструватись
               </Link>
             </li>
           </>
         )}
         {isAuthenticated && (
           <>
-            <li>
-              <Link className="nav-link" to="/user/profile">
-                User Profile
-              </Link>
-            </li>
+						{isAdmin && (
+            	<li>
+              	<Link className="nav-link" to="/user/profile">
+                	Замовлення
+              	</Link>
+            	</li>
+						)}
             <li>
               <Link className="nav-link" to="/" onClick={() => signout()}>
-                Sign Out
+                Вихід
               </Link>
             </li>
           </>
@@ -51,6 +53,7 @@ const Navbar = ({ isAuthenticated, signout }) => (
 
 Navbar.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   signout: PropTypes.func.isRequired,
 }
 
@@ -93,6 +96,7 @@ const NavbarStyled = styled.div`
 
 const mapStateToProps = state => ({
   isAuthenticated: state.applicationUser.isAuthenticated,
+	isAdmin: state.applicationUser.isAdmin || false,
 })
 
 export default connect(

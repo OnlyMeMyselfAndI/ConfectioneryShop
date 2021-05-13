@@ -17,13 +17,18 @@ namespace Webapi.Repositories
     Task<IEnumerable<Product>> GetAll();
 
     /*
-      Get Product by its id
+      Get Product by its title
+    */
+    Task<Product> GetByTitle(string title);
+
+    /*
+      Get Product by its title
     */
     Task<Product> GetById(int id);
 
     /*
-      Get Product by its id
+      Remove Product by its title
     */
-    Task RemoveById(int id);
+    Task RemoveByTitle(string title);
   }
 }

@@ -3,7 +3,6 @@ import styled from "styled-components"
 
 const SignUpBottons = () => (
   <SignUpBottonsStyled className="SignUpBottons">
-    <h1>Sign Up Bottoms</h1>
   </SignUpBottonsStyled>
 )
 
