@@ -59,7 +59,7 @@ const SignInForm = ({ onSubmit }) => {
         if (err.response) {
           setErrors({ ...errors })
         } else {
-          setErrors({ ...errors, global: "No response from the server" })
+          setErrors({ ...errors, global: "Немає відповіді від сервера" })
         }
       })
     }
@@ -75,11 +75,11 @@ const SignInForm = ({ onSubmit }) => {
         <Form onSubmit={handleSubmit}>
           {errors.global !== "" && <AlertError text={errors.global} />}
           <FormGroup>
-            <label htmlFor="email">E-mail</label>
+            <label htmlFor="email">Імейл</label>
             <input
               type="text"
               name="email"
-              placeholder="E-mail Address"
+              placeholder="Імейл адреса"
               value={email}
               onChange={e => setEmail(e.target.value)}
             />
@@ -87,11 +87,11 @@ const SignInForm = ({ onSubmit }) => {
           </FormGroup>
 
           <FormGroup>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Пароль</label>
             <input
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder="Пароль"
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
@@ -99,7 +99,7 @@ const SignInForm = ({ onSubmit }) => {
           </FormGroup>
 
           <FormGroup>
-            <button type="submit">Sign In</button>
+            <button type="submit">Увійти</button>
           </FormGroup>
         </Form>
       )}

@@ -24,7 +24,7 @@ export default {
 					.then(response => response.data),
 	},
   products: {
-    create: (title, image, price, info) =>
+    create: ({title, image, price, info}) =>
       axios
         .post(`${host}/products`, { title, image, price, info })
         .then(response => response.data),

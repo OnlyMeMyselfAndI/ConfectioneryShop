@@ -108,7 +108,7 @@ const SignUpForm = ({ onSubmit }) => {
         if (err.response) {
           setErrors({ ...errors, global: err.response.data.errors.global })
         } else {
-          setErrors({ ...errors, global: "No response from the server" })
+          setErrors({ ...errors, global: "Немає відповіді від сервера" })
         }
       })
     }
@@ -117,18 +117,18 @@ const SignUpForm = ({ onSubmit }) => {
   return (
     <SignUpFormStyled className="SignUpForm">
 
-      {isLoading && <LoadingSpinner text="Trying to signup new user..." />}
+      {isLoading && <LoadingSpinner text="Реєструємо нового користувача..." />}
 
       {!isLoading && (
         <Form onSubmit={handleSubmit}>
           {errors.global !== "" && <AlertError text={errors.global} />}
 
           <FormGroup>
-            <label>User Name</label>
+            <label>Ім'я кристувача</label>
             <input
               type="text"
               name="username"
-              placeholder="Username"
+              placeholder="Ім'я користувача"
               value={username}
               onChange={e => setUsername(e.target.value)}
             />
@@ -136,11 +136,11 @@ const SignUpForm = ({ onSubmit }) => {
           </FormGroup>
 
           <FormGroup>
-            <label>Full Name</label>
+            <label>Повне ім'я</label>
             <input
               type="text"
               name="fullname"
-              placeholder="Full Name"
+              placeholder="Повне ім'я"
               value={fullname}
               onChange={e => setFullname(e.target.value)}
             />
@@ -148,11 +148,11 @@ const SignUpForm = ({ onSubmit }) => {
           </FormGroup>
 
           <FormGroup>
-            <label>E-mail</label>
+            <label>Імейл</label>
             <input
               type="text"
               name="email"
-              placeholder="E-mail Address"
+              placeholder="Імейл адреса"
               value={email}
               onChange={e => setEmail(e.target.value)}
             />
@@ -160,11 +160,11 @@ const SignUpForm = ({ onSubmit }) => {
           </FormGroup>
 
           <FormGroup>
-            <label>Password</label>
+            <label>Пароль</label>
             <input
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder="Пароль"
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
@@ -172,11 +172,11 @@ const SignUpForm = ({ onSubmit }) => {
           </FormGroup>
 
           <FormGroup>
-            <label>Confirm Password</label>
+            <label>Підтвердження паролю</label>
             <input
               type="password"
               name="confirmPassword"
-              placeholder="Confirm your Password Here"
+              placeholder="Підтвердження паролю"
               value={confirmPassword}
               onChange={e => setConfirPassword(e.target.value)}
             />
@@ -186,7 +186,7 @@ const SignUpForm = ({ onSubmit }) => {
           </FormGroup>
 
           <FormGroup>
-            <button type="submit">Sign Up</button>
+            <button type="submit">Зареєструватись</button>
           </FormGroup>
         </Form>
       )}

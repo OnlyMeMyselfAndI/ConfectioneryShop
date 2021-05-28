@@ -32,13 +32,18 @@ const Navbar = ({ isAuthenticated, isAdmin, signout }) => (
         )}
         {isAuthenticated && (
           <>
-						{isAdmin && (
+						{isAdmin && (<>
             	<li>
               	<Link className="nav-link" to="/user/profile">
                 	Замовлення
               	</Link>
             	</li>
-						)}
+							<li>
+								<Link className="nav-link" to="/products/create">
+									Додати продукт
+								</Link>
+							</li>
+						</>)}
             <li>
               <Link className="nav-link" to="/" onClick={() => signout()}>
                 Вихід

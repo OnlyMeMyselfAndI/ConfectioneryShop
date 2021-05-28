@@ -8,6 +8,7 @@ import PropTypes from "prop-types"
 import HomePage from "./pages/HomePage"
 import SignUpPage from "./pages/SignUpPage"
 import SignInPage from "./pages/SignInPage"
+import ProductCreationPage from "./pages/ProductCreationPage"
 import UserProfilePage from "./pages/user/UserProfilePage"
 
 import SiteHeader from "./components/layout/SiteHeader"
@@ -32,6 +33,11 @@ const App = ({ signinWithToken }) => {
             exact
             path="/user/profile"
             component={UserProfilePage}
+          />
+					<CustomerRoute
+            exact
+            path="/products/create"
+            component={ProductCreationPage}
           />
         </Switch>
         {/* SiteFooter */}

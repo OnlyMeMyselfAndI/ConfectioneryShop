@@ -43,7 +43,7 @@ namespace Webapi.Repositories.Impl
       string sql = $"SELECT * FROM public.\"Products\" WHERE \"ID\" = {id}";
       using (var connection = new NpgsqlConnection(this.connectionString))
       {
-        return await connection.QueryFirstAsync<Product>(sql);
+        return await connection.QueryFirstOrDefaultAsync<Product>(sql);
       }
     }
 
@@ -52,7 +52,7 @@ namespace Webapi.Repositories.Impl
       string sql = $"SELECT * FROM public.\"Products\" WHERE \"Title\" = '{title}'";
       using (var connection = new NpgsqlConnection(this.connectionString))
       {
-        return await connection.QueryFirstAsync<Product>(sql);
+        return await connection.QueryFirstOrDefaultAsync<Product>(sql);
       }
     }
 
